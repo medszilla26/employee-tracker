@@ -64,3 +64,12 @@ function startPrompt() {
       }
     });
 }
+
+function employeeView() {
+  console.log("CURRENT EMPLOYEE ROSTER\n");
+  connection.query("SELECT * FROM employee_table", function (err, res) {
+    if (err) throw err;
+    console.log(res);
+    startPrompt();
+  });
+}
