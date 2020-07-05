@@ -12,7 +12,6 @@ var connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId);
   startPrompt();
 });
 
@@ -64,12 +63,35 @@ function startPrompt() {
       }
     });
 }
-
+console.log("\n WELCOME TO\n EMPLOYEE MANAGER");
 function employeeView() {
-  console.log("CURRENT EMPLOYEE ROSTER\n");
+  console.log("\n CURRENT EMPLOYEE ROSTER\n");
   connection.query("SELECT * FROM employee_table", function (err, res) {
     if (err) throw err;
     console.log(res);
+    startPrompt();
+  });
+}
+
+function viewByManager() {
+  console.log("Select Manager to view employees\n");
+  connection.query;
+}
+
+// function addEmployee()
+
+// function removeEmployee()
+
+// function updateRole()
+
+// function updateManager()
+
+function viewAllRoles() {
+  console.log("\n CURRENT DEPARTMENTS\n");
+  connection.query("SELECT * FROM department_table", function (err, res) {
+    if (err) throw err;
+    console.log(res);
+    console.log("What else would you like to do?");
     startPrompt();
   });
 }
