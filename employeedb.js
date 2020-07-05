@@ -1,27 +1,32 @@
-var mysql = require("mysql2");
+const mysql = require("mysql2");
 const { start } = require("repl");
-var inquirer = require(inquirer);
+var inquirer = require("inquirer");
 
 var connection = mysql.createConnection({
   host: "localhost",
-  port: 8080,
+  port: 3306,
   user: "root",
-  password: "",
+  password: "Honda126!",
   database: "employee_db",
 });
 
-connection.connect(function (err) {
+connection.connect((err) => {
   if (err) throw err;
-  start();
-});
+  console.log("connected as id " + connection.threadId);
+  connection.end();
 
-function start() {
-  inquirer.prompt({
-    name: "options",
-    type: "list",
-    message: "What would you like to do?",
-    choices: [
-      "View All Employees, View All Employees by Manager, Add Employee, Remove Employee, Update Employee Role, Update Employee Manager, View All Roles",
-    ],
-  });
-}
+  //start();
+});
+// function start() {
+//   inquirer.prompt({
+//     name: "options",
+//     type: "list",
+//     message: "What would you like to do?",
+//     choices: [
+//       "View All Employees", "View All Employees by Manager", "Add Employee", "Remove Employee", "Update Employee Role", "Update Employee Manager", "View All Roles",
+//     ],
+//   });
+//   .then(function (answer) {
+//       if (answer.options === "View All Employees")
+//   })
+// }
