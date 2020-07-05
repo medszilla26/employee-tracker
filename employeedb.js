@@ -12,6 +12,7 @@ var connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) throw err;
+  console.log("\n WELCOME TO\n EMPLOYEE MANAGER" + "\n");
   startPrompt();
 });
 
@@ -63,7 +64,7 @@ function startPrompt() {
       }
     });
 }
-console.log("\n WELCOME TO\n EMPLOYEE MANAGER");
+
 function employeeView() {
   console.log("\n CURRENT EMPLOYEE ROSTER\n");
   connection.query("SELECT * FROM employee_table", function (err, res) {
@@ -96,13 +97,13 @@ function addEmployee() {
         type: "list",
         message: "What is the employee's role?",
         choices: [
-          "Sales Lead",
-          "Salesperson",
-          "Lead Engineer",
-          "Account Manager",
-          "Accountant",
-          "Legal Team Lead",
-          "Software Engineer",
+          //   "Sales Lead",
+          //   "Salesperson",
+          //   "Lead Engineer",
+          //   "Account Manager",
+          //   "Accountant",
+          //   "Legal Team Lead",
+          //   "Software Engineer",
         ],
       },
       {
@@ -128,13 +129,20 @@ function addEmployee() {
         }
       );
     });
-
-  // function removeEmployee()
-
-  // function updateRole()
-
-  // function updateManager()
 }
+function removeEmployee() {
+  console.log("\nWhich employee would you like to remove?\n");
+  connection.query("DELETE FROM employee_table WHERE ?");
+}
+
+function updateRole() {
+  console.log("\nWhich employee's title do you like to update?");
+}
+
+function updateManager() {
+  console.log("\nWhich employee's manager do you want to update?");
+}
+
 function viewAllRoles() {
   console.log("\n DEPARTMENT LIST\n");
   connection.query("SELECT * FROM department_table", function (err, res) {
