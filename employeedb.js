@@ -68,30 +68,78 @@ function employeeView() {
   console.log("\n CURRENT EMPLOYEE ROSTER\n");
   connection.query("SELECT * FROM employee_table", function (err, res) {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
     startPrompt();
   });
 }
 
 function viewByManager() {
   console.log("Select Manager to view employees\n");
-  connection.query;
+  connection.query("SELECT ");
 }
 
-// function addEmployee()
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "firstName",
+        type: "input",
+        message: "What is the employee's first name?",
+      },
+      {
+        name: "lastName",
+        type: "input",
+        message: "What is the employee's last name?",
+      },
+      {
+        name: "employeeRole",
+        type: "list",
+        message: "What is the employee's role?",
+        choices: [
+          "Sales Lead",
+          "Salesperson",
+          "Lead Engineer",
+          "Account Manager",
+          "Accountant",
+          "Legal Team Lead",
+          "Software Engineer",
+        ],
+      },
+      {
+        name: "employeeManager",
+        type: "list",
+        message: "Who is the employees manager?",
+        choices: [],
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "INSERT INTO employee_table SET ?",
+        {
+          first_name: answer.firstName,
+          last_name: answer.lastName,
+          role_ID: answer.employeeRole,
+          manager_ID: answer.employeeManager,
+        },
+        function (err) {
+          if (err) throw err;
+          console.log("Employee added successfully!");
+          startPrompt();
+        }
+      );
+    });
 
-// function removeEmployee()
+  // function removeEmployee()
 
-// function updateRole()
+  // function updateRole()
 
-// function updateManager()
-
+  // function updateManager()
+}
 function viewAllRoles() {
-  console.log("\n CURRENT DEPARTMENTS\n");
+  console.log("\n DEPARTMENT LIST\n");
   connection.query("SELECT * FROM department_table", function (err, res) {
     if (err) throw err;
-    console.log(res);
-    console.log("What else would you like to do?");
+    console.table(res);
     startPrompt();
   });
 }
