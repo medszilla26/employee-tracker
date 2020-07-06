@@ -30,6 +30,7 @@ function startPrompt() {
         "Update Employee Role",
         "Update Employee Manager",
         "View All Roles",
+        "EXIT",
       ],
     })
     .then(function (answer) {
@@ -60,6 +61,10 @@ function startPrompt() {
 
         case "View All Roles":
           viewAllRoles();
+          break;
+
+        case "EXIT":
+          connection.end();
           break;
       }
     });
@@ -96,21 +101,13 @@ function addEmployee() {
         name: "employeeRole",
         type: "list",
         message: "What is the employee's role?",
-        choices: [
-          //   "Sales Lead",
-          //   "Salesperson",
-          //   "Lead Engineer",
-          //   "Account Manager",
-          //   "Accountant",
-          //   "Legal Team Lead",
-          //   "Software Engineer",
-        ],
+        choices: "SELECT FROM department_table WHERE ?",
       },
       {
         name: "employeeManager",
         type: "list",
-        message: "Who is the employees manager?",
-        choices: [],
+        message: "Who is the employee's manager?",
+        choices: "",
       },
     ])
     .then(function (answer) {
