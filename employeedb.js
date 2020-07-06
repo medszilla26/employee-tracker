@@ -105,7 +105,7 @@ function addEmployee() {
         },
         {
           name: "employeeRole",
-          type: "rawlist",
+          type: "list",
           message: "What is the employee's role?",
           choices: function () {
             var roleArray = [];
@@ -119,7 +119,7 @@ function addEmployee() {
           name: "employeeManager",
           type: "list",
           message: "Who is the employee's manager?",
-          choices: "",
+          choices: function () {},
         },
       ])
       .then(function (answer) {
