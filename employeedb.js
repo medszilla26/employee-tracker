@@ -85,47 +85,60 @@ function viewByManager() {
 }
 
 function addEmployee() {
-  inquirer
-    .prompt([
-      {
-        name: "firstName",
-        type: "input",
-        message: "What is the employee's first name?",
-      },
-      {
-        name: "lastName",
-        type: "input",
-        message: "What is the employee's last name?",
-      },
-      {
-        name: "employeeRole",
-        type: "list",
-        message: "What is the employee's role?",
-        choices: ,
-      },
-      {
-        name: "employeeManager",
-        type: "list",
-        message: "Who is the employee's manager?",
-        choices: 
-      },
-    ])
-    .then(function (answer) {
-      connection.query(
-        "INSERT INTO employee_table SET ?",
+  connection.query("SELECT * FROM employee_role_table", function (
+    err,
+    results
+  ) {
+    if (err) throw err;
+
+    inquirer
+      .prompt([
         {
-          first_name: answer.firstName,
-          last_name: answer.lastName,
-          role_ID: answer.employeeRole,
-          manager_ID: answer.employeeManager,
+          name: "firstName",
+          type: "input",
+          message: "What is the employee's first name?",
         },
-        function (err) {
-          if (err) throw err;
-          console.log("Employee added successfully!");
-          startPrompt();
-        }
-      );
-    });
+        {
+          name: "lastName",
+          type: "input",
+          message: "What is the employee's last name?",
+        },
+        {
+          name: "employeeRole",
+          type: "rawlist",
+          message: "What is the employee's role?",
+          choices: function () {
+            var roleArray = [];
+            for (var i = 0; i < results.length; i++) {
+              roleArray.push(results[i].title);
+            }
+            return roleArray;
+          },
+        },
+        {
+          name: "employeeManager",
+          type: "list",
+          message: "Who is the employee's manager?",
+          choices: "",
+        },
+      ])
+      .then(function (answer) {
+        connection.query(
+          "INSERT INTO employee_table SET ?",
+          {
+            first_name: answer.firstName,
+            last_name: answer.lastName,
+            role_ID: answer.employeeRole,
+            manager_ID: answer.employeeManager,
+          },
+          function (err) {
+            if (err) throw err;
+            console.log("Employee added successfully!");
+            startPrompt();
+          }
+        );
+      });
+  });
 }
 function removeEmployee() {
   console.log("\nWhich employee would you like to remove?\n");
