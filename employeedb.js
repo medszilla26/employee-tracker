@@ -20,7 +20,7 @@ function startPrompt() {
   inquirer
     .prompt({
       name: "action",
-      type: "rawlist",
+      type: "list",
       message: "What would you like to do?",
       choices: [
         "View All Employees",
@@ -101,13 +101,13 @@ function addEmployee() {
         name: "employeeRole",
         type: "list",
         message: "What is the employee's role?",
-        choices: "SELECT FROM department_table WHERE ?",
+        choices: ,
       },
       {
         name: "employeeManager",
         type: "list",
         message: "Who is the employee's manager?",
-        choices: "",
+        choices: 
       },
     ])
     .then(function (answer) {
