@@ -73,11 +73,15 @@ function startPrompt() {
 
 function employeeView() {
   console.log("\n CURRENT EMPLOYEE ROSTER\n");
-  connection.query("SELECT * FROM employee_table", function (err, res) {
-    if (err) throw err;
-    console.table(res);
-    startPrompt();
-  });
+  connection.query(
+    "SELECT e.employee_ID as employee_ID, e.first_name as first_name, e.last_name as last_name, d.department as department, r.title as title, r.salary as salary FROM employee_table e INNER JOIN employee_role_table r ON e.role_ID = r.role_ID INNER JOIN department_table d ON r.dept_ID = d.dept_ID",
+
+    function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      startPrompt();
+    }
+  );
 }
 
 function viewByManager() {
@@ -163,9 +167,12 @@ function updateRole() {
 }
 
 function updateManager() {
-  connection.query("SELECT * FROM employee_table", function (err, res) {
-    if (err) throw err;
-  });
+  connection.query(
+    "SELECT first_name, last_name FROM employee_table",
+    function (err, res) {
+      if (err) throw err;
+    }
+  );
   inquirer.prompt({
     name: "updateManager",
     type: "list",

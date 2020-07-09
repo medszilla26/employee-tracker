@@ -32,12 +32,3 @@ CREATE TABLE department_table (
 
 
 
-
-
-
-
-
-
-
-
-
