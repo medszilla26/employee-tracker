@@ -15,7 +15,7 @@ VALUES
 (4, "Legal Team Lead", 250000.00),
 (4, "Lawyer", 190000.00);
 
-INSERT INTO employee_table (first_name, last_name, role_ID, manager_ID)
+INSERT INTO employee_table (first_name, last_name, role_ID, manager)
 VALUES 
 ("Pablo", "Hernandez", 4),
 ("Jose", "Medrano", 3),

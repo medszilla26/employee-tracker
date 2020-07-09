@@ -7,5 +7,5 @@ ALTER TABLE employee_table
     REFERENCES employee_role_table(role_ID);
 
 ALTER TABLE employee_table
-    ADD FOREIGN KEY (manager_ID)
+    ADD FOREIGN KEY (manager)
     REFERENCES employee_table (employee_ID);

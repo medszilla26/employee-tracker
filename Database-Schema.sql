@@ -24,9 +24,12 @@ CREATE TABLE department_table (
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     role_ID INT,
-    manager_ID INT NULL,
+    manager INT NULL,
     PRIMARY KEY (employee_ID)
     );
+
+
+
 
 
 

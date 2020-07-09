@@ -1,6 +1,7 @@
 const mysql = require("mysql2");
 const { start } = require("repl");
 var inquirer = require("inquirer");
+const { fuchsia } = require("color-name");
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -81,7 +82,7 @@ function employeeView() {
 
 function viewByManager() {
   console.log("Select Manager to view employees\n");
-  connection.query("SELECT ");
+  connection.query("SELECT  ");
 }
 
 function addEmployee() {
@@ -119,17 +120,23 @@ function addEmployee() {
           name: "employeeManager",
           type: "list",
           message: "Who is the employee's manager?",
-          choices: function () {},
+          choices: function () {
+            var managerArray = [];
+            for (var i = 0; i < results.length; i++) {
+              managerArray.push(results[i].first_name + results[i].last_name);
+            }
+            return managerArray;
+          },
         },
       ])
       .then(function (answer) {
         connection.query(
-          "INSERT INTO employee_table SET ?",
+          "INSERT INTO employee_table VALUES ?",
           {
             first_name: answer.firstName,
             last_name: answer.lastName,
-            role_ID: answer.employeeRole,
-            manager_ID: answer.employeeManager,
+            title: answer.employeeRole,
+            manager: answer.employeeManager,
           },
           function (err) {
             if (err) throw err;
@@ -140,24 +147,47 @@ function addEmployee() {
       });
   });
 }
-function removeEmployee() {
-  console.log("\nWhich employee would you like to remove?\n");
-  connection.query("DELETE FROM employee_table WHERE ?");
-}
+
+function removeEmployee() {}
 
 function updateRole() {
-  console.log("\nWhich employee's title do you like to update?");
+  //   console.log("\nWhich employee's title do you like to update?");
+  connection.query("SELECT * FROM employee_table", function (err, res) {
+    if (err) throw err;
+  });
+  inquirer.prompt({
+    name: "updateRole",
+    type: "list",
+    message: "Which employee's title do you like to update?",
+  });
 }
 
 function updateManager() {
-  console.log("\nWhich employee's manager do you want to update?");
+  connection.query("SELECT * FROM employee_table", function (err, res) {
+    if (err) throw err;
+  });
+  inquirer.prompt({
+    name: "updateManager",
+    type: "list",
+    message: "Which employee's manager do you want to update?",
+    choices: function () {
+      var testArray = [];
+      for (var i = 0; i < results.length; i++) {
+        testArray.push(results[i].first_name + results[i].last_name);
+      }
+      return startPrompt();
+    },
+  });
 }
 
 function viewAllRoles() {
-  console.log("\n DEPARTMENT LIST\n");
-  connection.query("SELECT * FROM department_table", function (err, res) {
-    if (err) throw err;
-    console.table(res);
-    startPrompt();
-  });
+  console.log("\n TITLE & DEPARTMENTS \n");
+  connection.query(
+    "SELECT department, title, salary FROM employee_role_table RIGHT JOIN department_table ON employee_role_table.role_ID = department_table.dept_ID;",
+    function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      startPrompt();
+    }
+  );
 }
