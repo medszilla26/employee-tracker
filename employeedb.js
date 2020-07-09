@@ -25,11 +25,9 @@ function startPrompt() {
       message: "What would you like to do?",
       choices: [
         "View All Employees",
-        "View All Employees by Manager",
         "Add Employee",
         "Remove Employee",
         "Update Employee Role",
-        "Update Employee Manager",
         "View All Roles",
         "EXIT",
       ],
@@ -38,10 +36,6 @@ function startPrompt() {
       switch (answer.action) {
         case "View All Employees":
           employeeView();
-          break;
-
-        case "View All Employees by Manager":
-          viewByManager();
           break;
 
         case "Add Employee":
@@ -54,10 +48,6 @@ function startPrompt() {
 
         case "Update Employee Role":
           updateRole();
-          break;
-
-        case "Update Employee Manager":
-          updateManager();
           break;
 
         case "View All Roles":
@@ -82,11 +72,6 @@ function employeeView() {
       startPrompt();
     }
   );
-}
-
-function viewByManager() {
-  console.log("Select Manager to view employees\n");
-  connection.query("SELECT  ");
 }
 
 function addEmployee() {
@@ -120,27 +105,27 @@ function addEmployee() {
             return roleArray;
           },
         },
-        {
-          name: "employeeManager",
-          type: "list",
-          message: "Who is the employee's manager?",
-          choices: function () {
-            var managerArray = [];
-            for (var i = 0; i < results.length; i++) {
-              managerArray.push(results[i].first_name + results[i].last_name);
-            }
-            return managerArray;
-          },
-        },
+        // {
+        //   name: "employeeManager",
+        //   type: "list",
+        //   message: "Who is the employee's manager?",
+        //   choices: function () {
+        //     var managerArray = [];
+        //     for (var i = 0; i < results.length; i++) {
+        //       managerArray.push(results[i].first_name + results[i].last_name);
+        //     }
+        //     return managerArray;
+        //   },
+        // },
       ])
       .then(function (answer) {
         connection.query(
-          "INSERT INTO employee_table VALUES ?",
+          "INSERT INTO employee_role_table SET ?",
           {
             first_name: answer.firstName,
             last_name: answer.lastName,
             title: answer.employeeRole,
-            manager: answer.employeeManager,
+            // manager: answer.employeeManager,
           },
           function (err) {
             if (err) throw err;
@@ -154,38 +139,17 @@ function addEmployee() {
 
 function removeEmployee() {}
 
-function updateRole() {
-  //   console.log("\nWhich employee's title do you like to update?");
-  connection.query("SELECT * FROM employee_table", function (err, res) {
-    if (err) throw err;
-  });
-  inquirer.prompt({
-    name: "updateRole",
-    type: "list",
-    message: "Which employee's title do you like to update?",
-  });
-}
-
-function updateManager() {
-  connection.query(
-    "SELECT first_name, last_name FROM employee_table",
-    function (err, res) {
-      if (err) throw err;
-    }
-  );
-  inquirer.prompt({
-    name: "updateManager",
-    type: "list",
-    message: "Which employee's manager do you want to update?",
-    choices: function () {
-      var testArray = [];
-      for (var i = 0; i < results.length; i++) {
-        testArray.push(results[i].first_name + results[i].last_name);
-      }
-      return startPrompt();
-    },
-  });
-}
+// function updateRole() {
+// console.log("\nWhich employee's title do you like to update?");
+//   connection.query("SELECT ", function (err, res) {
+//     if (err) throw err;
+//   });
+//   inquirer.prompt({
+//     name: "updateRole",
+//     type: "list",
+//     message: "Which employee's title do you like to update?",
+//   });
+// }
 
 function viewAllRoles() {
   console.log("\n TITLE & DEPARTMENTS \n");
