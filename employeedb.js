@@ -55,6 +55,7 @@ function startPrompt() {
           break;
 
         case "EXIT":
+          console.log("\n THANK YOU, GOODBYE!\n");
           connection.end();
           break;
       }
