@@ -4,43 +4,20 @@
 
 https://github.com/medszilla26/employee-tracker
 
-## Sample Video
-
-NA
-
 ## Description
 
-NA
+A node application that utilizes MYSQL databases and express js to display roster information. It was designed with the purpose to display add, subtract and update employees.
+_Not completed_
 
 ## Table of Contents
 
 - [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
 - [License](#license)
-- [Contributing](#contributing)
-- [Tests](#tests)
 - [Questions](#questions)
-
-## Installation
-
-NA
-
-## Usage
-
-NA
 
 ## License
 
 Employee Tracker is released under the ![GitHub license](https://img.shields.io/badge/license-ISC-blue.svg)
-
-## Contributors
-
-NA
-
-## Tests
-
-NA
 
 ## Questions
 
