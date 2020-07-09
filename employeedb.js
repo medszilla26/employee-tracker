@@ -190,7 +190,7 @@ function updateManager() {
 function viewAllRoles() {
   console.log("\n TITLE & DEPARTMENTS \n");
   connection.query(
-    "SELECT department, title, salary FROM employee_role_table RIGHT JOIN department_table ON employee_role_table.role_ID = department_table.dept_ID;",
+    "SELECT d.department as department, r.title as title, r.salary as salary FROM employee_role_table r LEFT JOIN department_table d ON r.dept_ID = d.dept_ID",
     function (err, res) {
       if (err) throw err;
       console.table(res);
